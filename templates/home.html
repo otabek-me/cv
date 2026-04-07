@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content%}
+    <section>
+        <h3>Home page sahifasi</h3>
+
+        {% if user.is_authenticated %}
+            <h3>{{ user.get_full_name }}</h3>
+            <a href="{% url 'profile' %}">profile</a><br>
+            <a href="{% url 'profile-update' %}">profilni yangilash</a>
+            <a href="{% url 'create-cv' %}">Create CV</a><br>
+            <a href="{% url 'user-cv' %}">CV list</a>
+
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+        
+    </section>
+{% endblock content%}

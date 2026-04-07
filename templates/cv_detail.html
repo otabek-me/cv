@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load markdownify %}
+{% block content %}
+
+<style>
+.cv-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+.cv-header {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.cv-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #222;
+}
+
+.cv-contact {
+    color: #666;
+    margin-top: 8px;
+}
+
+.cv-body {
+    line-height: 1.7;
+    color: #333;
+}
+
+.cv-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.cv-btn {
+    padding: 10px 20px;
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.cv-btn:hover {
+    background: #2563eb;
+}
+</style>
+
+<div class="cv-container">
+
+<div class="cv-header">
+<div class="cv-name">
+{{ cv.ism }} {{ cv.familiya }}
+</div>
+
+<div class="cv-contact">
+📧 {{ cv.email }} |
+📞 {{ cv.phone }} |
+🎂 {{ cv.t_sana }}
+</div>
+</div>
+
+<div class="cv-body">
+{{ cv.cv_text|markdownify}}
+</div>
+
+<div class="cv-actions">
+<a href="{% url 'user-cv' %}" class="cv-btn">Orqaga</a>
+</div>
+
+</div>
+
+{% endblock %}

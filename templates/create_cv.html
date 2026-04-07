@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content%}
+    <form method='post'>{% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit</button>
+    </form>
+    <span>{{ user.requests}}/{{ user.limit_requests }}/////sanasi {{user.limit_date}}</span>
+{% endblock%}
