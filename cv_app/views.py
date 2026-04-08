@@ -1,11 +1,15 @@
 from django.shortcuts import render, get_object_or_404  
 from django.views.generic import View, ListView, DetailView
 from cv_app.models import CV
-from openai import OpenAI
+# from openai import OpenAI
 from cv_app.forms import CreateCVForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
+from google import genai
+from dotenv import load_dotenv
+import os
+
 
 
 # Create your views here.
@@ -40,7 +44,9 @@ class CreateCVView(View):
         return render(request, self.template_name, {"form":form})
     
     def post(self, request):
-        client = OpenAI()
+        # client = OpenAI()
+        client = genai.Client()
+
 
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -127,14 +133,13 @@ class CreateCVView(View):
                     Faqat CV matnini qaytaring.
                     """
                 try:
-                    response = client.chat.completions.create(
-                        model="gpt-4o-mini",
-                        messages=[
-                            {"role":'user', "content":prompt},
-                        ]
+                    response = client.models.generate_content(
+                        model="gemini-3-flash-preview",
+                        contents=prompt,
                     )
 
-                    cv_info.cv_text = response.choices[0].message.content
+                    # cv_info.cv_text = response.choices[0].message.content
+                    cv_info.cv_text = response.text
                     cv_info.save()
                 
                     return redirect('cv-detail', pk=cv_info.pk)
